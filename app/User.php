@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Auth;
 class User extends Authenticatable
 {
     /**
@@ -23,4 +23,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function expenses()
+    {
+        return $this->hasMany('App\Expense');
+    }
+
+    public function getTotalAttribute()
+    {
+        return Auth::user()->expenses()->sum('price');
+    }
 }

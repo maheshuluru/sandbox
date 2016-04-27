@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
 use App\Expense;
 use App\Http\Requests;
 use App\Http\Requests\ExpenseRequest;
 
 class ExpensesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
-        $expenses = Expense::all();
+        $expenses = Expense::owner()->get();
         return view('expenses.index', compact('expenses'));
     }
 
@@ -22,18 +27,19 @@ class ExpensesController extends Controller
     }
     public function store(ExpenseRequest $request)
     {
-        Expense::create($request->all());
+        $expense = new Expense($request->all());
+        Auth::user()->expenses()->save($expense);
         return redirect('/expenses');
     }
 
-    public function show(Expense $expenses)
+    public function show(Expense $expense)
     {
-        return view('expenses.show', ['expense' => $expenses]);
+        return view('expenses.show', compact('expense'));
     }
 
     public function edit(Expense $expenses)
     {
-        return view('expenses.edit', ['expense' => $expenses]);
+        return view('expenses.edit', compact('expense'));
     }
 
     public function update($id, ExpenseRequest $request)

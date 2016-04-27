@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::resource('expenses', 'ExpensesController');
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
