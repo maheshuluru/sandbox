@@ -37,7 +37,7 @@ class ExpensesController extends Controller
         return view('expenses.show', compact('expense'));
     }
 
-    public function edit(Expense $expenses)
+    public function edit(Expense $expense)
     {
         return view('expenses.edit', compact('expense'));
     }
