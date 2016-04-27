@@ -42,16 +42,15 @@ class ExpensesController extends Controller
         return view('expenses.edit', compact('expense'));
     }
 
-    public function update($id, ExpenseRequest $request)
+    public function update(Expense $expense, ExpenseRequest $request)
     {
-        $expense = Expense::findOrFail($id);
         $expense->update($request->all());
         return redirect('/expenses');
     }
 
-    public function destroy($id)
+    public function destroy(Expense $expense)
     {
-        Expense::destroy($id);
+        Expense::destroy($expense->id);
         return redirect('/expenses');
     }
 
