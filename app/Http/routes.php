@@ -15,23 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/expenses', function(){
-    $expenses = [
-        [
-            'id' => 1,
-            'name' => 'saf asdfa sf',
-            'price' => 150,
-        ],
-        [
-            'id' => 2,
-            'name' => 'Coffee',
-            'price' => 180,
-        ],
-        [
-            'id' => 3,
-            'name' => 'Cigarette',
-            'price' => 460,
-        ]
-    ];
-    return view('expenses.index', compact('expenses'));
-});
+Route::resource('expenses', 'ExpensesController');
